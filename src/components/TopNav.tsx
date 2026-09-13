@@ -90,7 +90,7 @@ export const TopNav: React.FC<TopNavProps> = ({
               onChange={(e) => setSearchValue(e.target.value)}
               onFocus={() => { if (results.length > 0) setShowDropdown(true); }}
               placeholder="Search city..."
-              className="w-full sm:w-[200px] sm:focus:w-[280px] bg-white/10 border border-white/10 rounded-full py-2 pl-10 pr-4 text-sm text-white placeholder-white/50 outline-none focus:bg-white/20 transition-all"
+              className="w-full sm:w-[200px] sm:focus:w-[280px] bg-white/10 border border-white/10 rounded-full py-2 pl-10 pr-4 text-base sm:text-sm text-white placeholder-white/50 outline-none focus:bg-white/20 transition-all"
             />
             {isSearching ? (
               <Loader2 size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 animate-spin" />
