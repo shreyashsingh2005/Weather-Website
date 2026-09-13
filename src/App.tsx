@@ -54,7 +54,7 @@ function App() {
           // If denied or error, load default
           loadWeather(defaultLocation.lat, defaultLocation.lon, defaultLocation.city, defaultLocation.country);
         },
-        { timeout: 5000 } // Don't wait too long
+        { enableHighAccuracy: false, timeout: 5000, maximumAge: 300000 } // Optimized for instant speed
       );
     } else {
       loadWeather(defaultLocation.lat, defaultLocation.lon, defaultLocation.city, defaultLocation.country);
@@ -89,9 +89,10 @@ function App() {
         if (err.code === err.PERMISSION_DENIED) {
            setErrorMsg('Location permission denied.');
         } else {
-           setErrorMsg('Unable to retrieve your location.');
+           setErrorMsg('Unable to retrieve your location. Try again or search manually.');
         }
-      }
+      },
+      { enableHighAccuracy: false, timeout: 5000, maximumAge: 300000 } // Optimized for instant speed
     );
   };
 
