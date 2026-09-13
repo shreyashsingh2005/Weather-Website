@@ -15,8 +15,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ data, convertTemp, unit, onCit
   const savedCities = ['Brooklyn', 'London', 'Tokyo', 'Dubai', 'Delhi'];
 
   return (
-    <aside className="w-full md:w-[280px] flex flex-col gap-6 shrink-0 z-20">
-      <GlassCard className="p-6 flex flex-col gap-6">
+    <div className="w-full h-full flex flex-col gap-6 shrink-0 z-20 min-w-0">
+      <GlassCard className="p-4 sm:p-6 flex flex-col gap-6 h-full">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-medium flex items-center gap-2">
             WeatherWise
@@ -56,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ data, convertTemp, unit, onCit
         </div>
 
         {/* Saved Locations */}
-        <div className="flex flex-col gap-3 mt-4">
+        <div className="flex flex-col gap-3 mt-2 sm:mt-4">
           <div className="flex items-center justify-between text-xs text-white/50 uppercase tracking-wider mb-2">
             <span>Select Area</span>
             <div className="flex gap-2">
@@ -76,9 +76,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ data, convertTemp, unit, onCit
                     : 'hover:bg-white/10 border border-transparent'
                 }`}
               >
-                <span className="font-medium">{city}</span>
+                <span className="font-medium truncate pr-2">{city}</span>
                 {data.city === city && (
-                  <motion.span layoutId="activeCityTemp" className="text-sm text-white font-medium">
+                  <motion.span layoutId="activeCityTemp" className="text-sm text-white font-medium shrink-0">
                     {convertTemp(data.temp)}°
                   </motion.span>
                 )}
@@ -88,8 +88,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ data, convertTemp, unit, onCit
         </div>
 
         {/* Mini Map representation */}
-        <div className="mt-4 flex flex-col items-center">
-           <div className="w-40 h-40 rounded-full border-2 border-white/10 bg-black/20 flex items-center justify-center relative overflow-hidden shadow-inner">
+        <div className="mt-auto pt-6 flex flex-col items-center">
+           <div className="w-40 h-40 rounded-full border-2 border-white/10 bg-black/20 flex items-center justify-center relative overflow-hidden shadow-inner shrink-0">
               {/* Abstract globe lines */}
               <div className="absolute inset-0 opacity-20 pointer-events-none">
                  <svg viewBox="0 0 100 100" className="animate-[spin_20s_linear_infinite]">
@@ -104,9 +104,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ data, convertTemp, unit, onCit
                  <MapPin className="text-white mt-1" size={16} fill="white" />
               </div>
            </div>
-           <p className="mt-4 text-sm text-white/60 text-center">{data.city}, <br/><span className="text-xs">{data.country}</span></p>
+           <p className="mt-4 text-sm text-white/60 text-center break-words w-full">{data.city}, <br/><span className="text-xs">{data.country}</span></p>
         </div>
       </GlassCard>
-    </aside>
+    </div>
   );
 };

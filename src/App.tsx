@@ -117,26 +117,26 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen w-full relative text-white font-sans overflow-x-hidden">
+    <div className="min-h-[100dvh] w-full relative text-white font-sans flex flex-col">
       <Background condition={weatherData?.condition || 'Cloudy'} />
       
-      {/* Container: Stacked on mobile, side-by-side on desktop */}
-      <div className="relative z-10 min-h-screen flex flex-col md:flex-row p-4 sm:p-6 lg:p-8 gap-6 max-w-[1600px] mx-auto">
+      {/* Container: Stacked on mobile, side-by-side on tablet/desktop */}
+      <div className="relative z-10 flex-1 flex flex-col lg:flex-row p-4 sm:p-6 lg:p-8 gap-6 w-full max-w-[1600px] mx-auto">
         
-        {/* Sidebar: Order 2 on mobile (bottom), Order 1 on desktop (left) */}
+        {/* Sidebar: Order 2 on mobile/tablet (bottom), Order 1 on desktop (left) */}
         {weatherData && (
-          <div className="order-2 md:order-1 w-full md:w-auto pb-8 md:pb-0">
+          <aside className="order-2 lg:order-1 w-full lg:w-[320px] xl:w-[380px] shrink-0 pb-8 lg:pb-0">
             <Sidebar 
               data={weatherData} 
               convertTemp={convertTemp} 
               unit={unit} 
               onCitySelect={handleCityPreset}
             />
-          </div>
+          </aside>
         )}
         
-        {/* Main Content: Order 1 on mobile (top), Order 2 on desktop (right) */}
-        <main className="order-1 md:order-2 flex-1 flex flex-col gap-6 w-full max-w-full">
+        {/* Main Content: Order 1 on mobile/tablet (top), Order 2 on desktop (right) */}
+        <main className="order-1 lg:order-2 flex-1 flex flex-col gap-6 w-full min-w-0">
           <TopNav 
             selectedCity={weatherData?.city || 'Locating...'}
             onLocationSelect={handleLocationSelect}
@@ -147,7 +147,7 @@ function App() {
           />
 
           {errorMsg && (
-             <div className="bg-red-500/20 border border-red-500/50 text-red-200 p-4 rounded-2xl backdrop-blur-md animate-fade-in text-sm sm:text-base">
+             <div role="alert" className="bg-red-500/20 border border-red-500/50 text-red-200 p-4 rounded-2xl backdrop-blur-md animate-fade-in text-sm sm:text-base">
                {errorMsg}
              </div>
           )}
@@ -159,7 +159,7 @@ function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col items-center justify-center min-h-[50vh]"
+                className="flex-1 flex flex-col items-center justify-center min-h-[50dvh]"
               >
                 <Loader2 size={48} className="animate-spin text-white/50 mb-4" />
                 <p className="text-white/60 tracking-wider uppercase text-sm font-medium">Fetching atmosphere</p>
@@ -171,24 +171,28 @@ function App() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="flex flex-col gap-8 sm:gap-10 pb-6 md:pb-12 w-full max-w-full overflow-hidden"
+                className="flex flex-col gap-8 sm:gap-10 pb-6 md:pb-12 w-full min-w-0"
               >
                 <HeroWeather data={weatherData} convertTemp={convertTemp} unit={unit} />
                 
-                <div className="flex flex-col gap-4 w-full">
+                <section className="flex flex-col gap-4 w-full min-w-0">
                   <h3 className="text-sm uppercase tracking-widest text-white/50 font-medium px-2">Hourly Forecast</h3>
-                  <div className="w-full">
+                  <div className="w-full min-w-0">
                      <HourlyForecast data={weatherData} convertTemp={convertTemp} />
                      <TemperatureChart data={weatherData} convertTemp={convertTemp} />
                   </div>
-                </div>
+                </section>
                 
-                <div className="flex flex-col gap-4 w-full">
+                <section className="flex flex-col gap-4 w-full min-w-0">
                   <h3 className="text-sm uppercase tracking-widest text-white/50 font-medium px-2">7-Day Forecast</h3>
-                  <WeeklyForecast data={weatherData} convertTemp={convertTemp} />
-                </div>
+                  <div className="w-full min-w-0">
+                    <WeeklyForecast data={weatherData} convertTemp={convertTemp} />
+                  </div>
+                </section>
                 
-                <WeatherDetails data={weatherData} />
+                <section className="w-full min-w-0">
+                  <WeatherDetails data={weatherData} />
+                </section>
               </motion.div>
             ) : null}
           </AnimatePresence>

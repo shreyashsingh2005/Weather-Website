@@ -40,11 +40,11 @@ export const WeatherDetails: React.FC<WeatherDetailsProps> = ({ data }) => {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-full min-w-0"
       >
         {/* AQI Premium Card */}
-        <motion.div variants={itemVariants} className="col-span-2 md:col-span-2 xl:col-span-2 h-full">
-          <GlassCard className="p-8 h-full relative overflow-hidden flex flex-col md:flex-row items-center gap-8 group transition-all hover:bg-white/[0.05]">
+        <motion.div variants={itemVariants} className="col-span-1 sm:col-span-2 lg:col-span-2 h-full min-w-0">
+          <GlassCard className="p-6 sm:p-8 h-full relative overflow-hidden flex flex-col md:flex-row items-center gap-6 sm:gap-8 group transition-all hover:bg-white/[0.05]">
             <div className="flex-1 w-full z-10">
               <div className="flex items-center gap-2 text-white/50 mb-4">
                 <Activity size={16} className="text-green-400" />

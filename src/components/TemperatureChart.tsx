@@ -14,6 +14,7 @@ export const TemperatureChart: React.FC<TemperatureChartProps> = ({ data, conver
   const minTemp = Math.min(...temps);
   const range = maxTemp - minTemp || 1; // Prevent division by zero
   
+  // Use responsive relative measurements
   const width = 800;
   const height = 150;
   const paddingX = 40;
@@ -45,9 +46,10 @@ export const TemperatureChart: React.FC<TemperatureChartProps> = ({ data, conver
   const fillPathD = `${pathD} L ${points[points.length - 1].x} ${height} L ${points[0].x} ${height} Z`;
 
   return (
-    <div className="w-full overflow-x-auto overflow-y-hidden pb-4 hide-scrollbar mt-12 px-4 md:px-8">
-      <div className="min-w-[600px] relative">
-        <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto overflow-visible">
+    <div className="w-full overflow-x-auto overflow-y-hidden pb-4 hide-scrollbar touch-pan-x min-w-0">
+      {/* Allow it to shrink to viewport on small screens, or scroll if min-w is hit */}
+      <div className="min-w-[500px] w-full relative">
+        <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" className="w-full h-[150px] overflow-visible">
           <defs>
             <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="rgba(255,255,255,0.4)" />
@@ -83,13 +85,13 @@ export const TemperatureChart: React.FC<TemperatureChartProps> = ({ data, conver
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
           />
 
           {/* Points and Labels */}
           {points.map((point, i) => (
             <g key={i} className="transition-all duration-300">
-              {/* Highlight active point (e.g. current hour) */}
-              {i === 3 && ( // Hardcode middle as active for demo
+              {i === 3 && ( // Highlight middle point
                 <>
                   <circle cx={point.x} cy={point.y} r="14" fill="rgba(255,255,255,0.2)" filter="url(#glow)"/>
                   <line x1={point.x} y1={point.y} x2={point.x} y2={height} stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="4 4" />
@@ -98,14 +100,14 @@ export const TemperatureChart: React.FC<TemperatureChartProps> = ({ data, conver
               <circle 
                 cx={point.x} 
                 cy={point.y} 
-                r="5" 
+                r="4" 
                 fill={i === 3 ? "#fff" : "rgba(255,255,255,0.8)"} 
                 stroke="rgba(0,0,0,0.5)"
                 strokeWidth="2"
               />
               <text 
                 x={point.x} 
-                y={height - 5} 
+                y={height - 10} 
                 fill={i === 3 ? "#fff" : "rgba(255,255,255,0.6)"}
                 fontSize="14" 
                 fontWeight={i === 3 ? "600" : "400"}
